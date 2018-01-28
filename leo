@@ -4,6 +4,10 @@ from __future__ import print_function
 
 import sys
 
+PINK = '\033[95m'
+BOLD = '\033[1m'
+ENDC = '\033[0m'
+
 user_interrupt_errors = (KeyboardInterrupt,)
 if sys.version_info[0] == 3:
     user_interrupt_errors += (BrokenPipeError,)
@@ -300,7 +304,7 @@ def _print_translation(translation):
     word_table = []
     for entry in translation:
         word_table.append([side['word'] for side in entry['sides']])
-    print(tabulate(word_table, headers=[LANGUAGES.get(args['source_lang'], args['source_lang']), 'German']))
+    print(tabulate(word_table, headers=[PINK + LANGUAGES.get(args['source_lang'] , args['source_lang']) + ENDC, PINK + 'German'+ ENDC]))
 
 def _print_similar(similar):
     print(tabulate(similar, headers="keys"))
@@ -372,7 +376,7 @@ if __name__ == '__main__':
                 else:
                     print('\tNo translations found')
                 if similar:
-                    print("\nSimilar Words")
+                    print("\n" + BOLD + "Similar Words" + ENDC)
                     _print_similar(similar)
                 if args['inflect']:
                     print()
